@@ -7,12 +7,14 @@ import (
 )
 
 func main() {
-	var v *handler.Video
-
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handler.HandleRoot)
-	mux.HandleFunc("POST /download", v.Download)
+	mux.HandleFunc("POST /download", handler.Download)
+	mux.HandleFunc("/file", handler.HandleServeFile)
+	mux.HandleFunc("/assets/ghost.png", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./images/ghost.png")
+	})
 
 	http.ListenAndServe(":8080", mux)
 }

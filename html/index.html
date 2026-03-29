@@ -1,8 +1,114 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Zynith</title>
-	</head>
-	<body>
-	</body>
+    <head>
+        <title>Youtube Downloader</title>
+        <div style="text-align: center;">
+            <h1 style="color: white; font-weight: 1000;">Youtube Downloader</h1>
+        </div>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <img src="/assets/ghost.png" alt="a ghost" height="152" class="img"> 
+        </div>
+        <div style="text-align: center;">
+            <input id="url" type="url" class="url"></input>
+            <div style="text-align: center;">
+                <select class="audio-format" id="audio-format">
+                    <option value="wav">wav</option>
+                    <option value="mp3">mp3</option>
+                    <option value="mp4">mp4</option>
+                </select>
+            </div>
+            <button onclick="getInputValue();" class="download" id="download">download</button>
+        </div>
+    </body>
 </html>
+
+<style>
+* {
+    font-family: IBM Plex Mono, monospace;
+    font-weight: 500;
+}
+
+body {
+    background-color: #1a1b26;
+}
+
+.download {
+    color: #eff4f6;
+    background-color: transparent;
+    border: solid #686d6e;
+    border-radius: 8px;
+    position: relative;
+    left: 206px;
+    top: 459px;
+    transition: ease-in-out background-color 100ms;
+}
+
+.download:hover {
+    background-color: #989ea0;
+}
+
+.download:active {
+    color: black;
+    background-color: white;
+}
+
+.audio-format {
+    color: white;
+    background-color: transparent;
+    border: solid #686d6e;
+    border-radius: 8px;
+    color: white;
+    position: relative;
+    left: -216px;
+    top: 485px;
+}
+
+.audio-format:hover {
+    background-color: #989ea0;
+}
+
+.audio-format:active {
+    color: black;
+}
+
+.url {
+    color: white;
+    background-color: transparent;
+    border: solid #686d6e;
+    border-radius: 8px;
+    width: 480px;
+    position: relative;
+    top: 480px;
+}
+
+.img {
+    position: relative;
+    top: 480px;
+}
+</style>
+
+<script>
+    function getInputValue() {
+        const download_button = document.getElementById("download");
+        const url = document.getElementById("url").value;
+        const format = document.getElementById("audio-format").value;
+        downloadFile();
+    };
+
+    function downloadFile() {
+        fetch("/download", {
+            method: "POST",
+            body: JSON.stringify({
+                url: "https://www.youtube.com/watch?v=sKtl7-_6AjE",
+                format: "mp3",
+            }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+    }
+</script>
